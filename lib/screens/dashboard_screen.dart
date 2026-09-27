@@ -143,11 +143,11 @@ class DashboardScreen extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
-                                icon: const Icon(Icons.check_circle, color: AppColors.success),
+                                icon: Icon(Icons.check_circle, color: AppColors.success),
                                 onPressed: () => FirestoreService().updateOfferStatus(offer['id'], 'accepted'),
                               ),
                               IconButton(
-                                icon: const Icon(Icons.cancel, color: AppColors.error),
+                                icon: Icon(Icons.cancel, color: AppColors.error),
                                 onPressed: () => FirestoreService().updateOfferStatus(offer['id'], 'rejected'),
                               ),
                             ],

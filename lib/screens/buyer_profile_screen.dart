@@ -121,7 +121,7 @@ class BuyerProfileScreen extends StatelessWidget {
                 },
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  side: const BorderSide(color: AppColors.border),
+                  side: BorderSide(color: AppColors.border),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
                 ),
                 child: Text('Log Out', style: AppTextStyles.button.copyWith(color: AppColors.dark)),
@@ -158,7 +158,7 @@ class BuyerProfileScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right, color: AppColors.textLight),
+            Icon(Icons.chevron_right, color: AppColors.textLight),
           ],
         ),
       ),

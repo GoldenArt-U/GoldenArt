@@ -141,15 +141,15 @@ class _CODCheckoutScreenState extends State<CODCheckoutScreen> {
             borderSide: BorderSide.none),
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(2),
-            borderSide: const BorderSide(color: AppColors.divider)),
+            borderSide: BorderSide(color: AppColors.divider)),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(2),
             borderSide:
-                const BorderSide(color: AppColors.primary, width: 2)),
+                BorderSide(color: AppColors.primary, width: 2)),
         errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(2),
             borderSide:
-                const BorderSide(color: AppColors.error)),
+                BorderSide(color: AppColors.error)),
       );
 
   @override

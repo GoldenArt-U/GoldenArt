@@ -39,7 +39,7 @@ class OrdersScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.receipt_long_outlined,
+                  Icon(Icons.receipt_long_outlined,
                       size: 80, color: AppColors.textLight),
                   const SizedBox(height: 16),
                   Text('Aucune commande',

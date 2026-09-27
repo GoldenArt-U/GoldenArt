@@ -62,7 +62,7 @@ class _AuthScreenState extends State<AuthScreen>
             borderSide: const BorderSide(color: Color(0xFFE5E7EB))),
         focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(2),
-            borderSide: const BorderSide(color: AppColors.primary, width: 2)),
+            borderSide: BorderSide(color: AppColors.primary, width: 2)),
       );
 
   Widget _leftPanel() => Container(
@@ -215,7 +215,7 @@ class _AuthScreenState extends State<AuthScreen>
                 label: Text('Continuer avec Google',
                     style: AppTextStyles.bodyMedium.copyWith(color: Colors.black87)),
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: AppColors.border),
+                  side: BorderSide(color: AppColors.border),
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(2)),
@@ -232,12 +232,12 @@ class _AuthScreenState extends State<AuthScreen>
                             builder: (_) => const HomeScreen()));
                   }
                 },
-                icon: const Icon(Icons.bolt_rounded, color: AppColors.primary),
+                icon: Icon(Icons.bolt_rounded, color: AppColors.primary),
                 label: Text('Tester en Mode Démo',
                     style:
                         AppTextStyles.bodyMedium.copyWith(color: AppColors.primary)),
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: AppColors.primary),
+                  side: BorderSide(color: AppColors.primary),
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(2)),

@@ -193,7 +193,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         }
                       },
                       style: OutlinedButton.styleFrom(
-                        side: const BorderSide(color: AppColors.dark, width: 2),
+                        side: BorderSide(color: AppColors.dark, width: 2),
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(2)),
@@ -281,7 +281,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               decoration: InputDecoration(
                 labelText: 'Amount (TND)',
                 border: const OutlineInputBorder(),
-                focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: AppColors.primary)),
+                focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.primary)),
               ),
             ),
           ],
@@ -360,7 +360,7 @@ class FullScreenImage extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: url,
               fit: BoxFit.contain,
-              placeholder: (_, __) => const CircularProgressIndicator(color: AppColors.primary),
+              placeholder: (_, __) => CircularProgressIndicator(color: AppColors.primary),
               errorWidget: (_, __, ___) => const Icon(Icons.error, color: Colors.white),
             ),
           ),

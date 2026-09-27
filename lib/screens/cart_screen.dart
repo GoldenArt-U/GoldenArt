@@ -53,7 +53,7 @@ class CartScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.shopping_bag_outlined,
+                  Icon(Icons.shopping_bag_outlined,
                       size: 80, color: AppColors.textLight),
                   const SizedBox(height: 16),
                   Text('Votre panier est vide',

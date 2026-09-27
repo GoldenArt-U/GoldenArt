@@ -461,12 +461,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(2),
-                      borderSide: const BorderSide(color: AppColors.border),
+                      borderSide: BorderSide(color: AppColors.border),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(2),
                       borderSide:
-                          const BorderSide(color: AppColors.primary, width: 1.5),
+                          BorderSide(color: AppColors.primary, width: 1.5),
                     ),
                     isDense: true,
                   ),
@@ -488,12 +488,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(2),
-                      borderSide: const BorderSide(color: AppColors.border),
+                      borderSide: BorderSide(color: AppColors.border),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(2),
                       borderSide:
-                          const BorderSide(color: AppColors.primary, width: 1.5),
+                          BorderSide(color: AppColors.primary, width: 1.5),
                     ),
                     isDense: true,
                   ),

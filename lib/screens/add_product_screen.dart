@@ -118,7 +118,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         title: Text('New 1-of-1 Listing', style: AppTextStyles.heading3),
       ),
       body: _isLoading 
-          ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
+          ? Center(child: CircularProgressIndicator(color: AppColors.primary))
           : SingleChildScrollView(
               padding: const EdgeInsets.all(24),
               child: Form(
