@@ -90,7 +90,7 @@ class BuyerProfileScreen extends StatelessWidget {
                           await auth.upgradeToSeller();
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Welcome to GoldenArt Studio!'), backgroundColor: AppColors.success),
+                              SnackBar(content: Text('Welcome to GoldenArt Studio!'), backgroundColor: AppColors.success),
                             );
                             Navigator.pop(context); // Pop profile to return home, profile button will now route to dashboard.
                           }

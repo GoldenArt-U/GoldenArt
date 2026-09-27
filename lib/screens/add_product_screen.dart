@@ -50,7 +50,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     if (!_formKey.currentState!.validate()) return;
     if (_imageBytes == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Veuillez ajouter une photo de l\'œuvre.')),
+        SnackBar(content: Text('Veuillez ajouter une photo de l\'œuvre.')),
       );
       return;
     }
@@ -85,7 +85,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       if (mounted) {
         Navigator.pop(context); // Go back to dashboard
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Œuvre publiée avec succès !')),
+          SnackBar(content: Text('Œuvre publiée avec succès !')),
         );
       }
     } catch (e) {

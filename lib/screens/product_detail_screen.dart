@@ -188,7 +188,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           _showOfferDialog(context, product, auth);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Veuillez vous connecter pour faire une offre.')),
+                            SnackBar(content: Text('Veuillez vous connecter pour faire une offre.')),
                           );
                         }
                       },
@@ -305,12 +305,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 );
                 if (mounted) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Offer submitted successfully!'), backgroundColor: AppColors.success),
+                    SnackBar(content: Text('Offer submitted successfully!'), backgroundColor: AppColors.success),
                   );
                 }
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Please enter a valid number (e.g. 1500)')),
+                  SnackBar(content: Text('Please enter a valid number (e.g. 1500)')),
                 );
               }
             },
