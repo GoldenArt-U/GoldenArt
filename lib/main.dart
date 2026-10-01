@@ -51,19 +51,39 @@ class GoldenArtApp extends StatelessWidget {
         title: 'GoldenArt',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xFFD97706),
-            surface: const Color(0xFFF9FAFB),
+          brightness: Brightness.dark,
+          colorScheme: ColorScheme.dark(
+            primary: const Color(0xFF800020),
+            surface: const Color(0xFF141414),
           ),
-          textTheme: GoogleFonts.interTextTheme(),
+          textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
           useMaterial3: true,
-          scaffoldBackgroundColor: const Color(0xFFF9FAFB),
+          scaffoldBackgroundColor: const Color(0xFF0A0A0A),
           appBarTheme: AppBarTheme(
-            backgroundColor: Colors.white,
-            elevation: 0.5,
+            backgroundColor: Colors.black,
+            elevation: 0,
             centerTitle: false,
             titleTextStyle: AppTextStyles.heading3,
-            iconTheme: const IconThemeData(color: Color(0xFF0F172A)),
+            iconTheme: const IconThemeData(color: Colors.white),
+          ),
+          dividerColor: const Color(0x1AFFFFFF),
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            fillColor: const Color(0xFF1A1A1A),
+            labelStyle: AppTextStyles.caption,
+            hintStyle: AppTextStyles.caption,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Color(0x33FFFFFF)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Color(0x33FFFFFF)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Color(0xFF800020), width: 2),
+            ),
           ),
         ),
         home: const SplashScreen(),

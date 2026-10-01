@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,9 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        backgroundColor: Colors.black,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
         title: Text('Mon Panier', style: AppTextStyles.heading2),
         actions: [
           if (cart.cartItems.isNotEmpty)
@@ -25,16 +29,23 @@ class CartScreen extends StatelessWidget {
                 final confirm = await showDialog<bool>(
                   context: context,
                   builder: (_) => AlertDialog(
-                    title: const Text('Vider le panier'),
-                    content: const Text(
-                        'Êtes-vous sûr de vouloir vider votre panier ?'),
+                    backgroundColor: AppColors.surface,
+                    title: Text('Vider le panier',
+                        style: AppTextStyles.heading3),
+                    content: Text(
+                        'Êtes-vous sûr de vouloir vider votre panier ?',
+                        style: AppTextStyles.body),
                     actions: [
                       TextButton(
                           onPressed: () => Navigator.pop(context, false),
-                          child: const Text('Annuler')),
+                          child: Text('Annuler',
+                              style: AppTextStyles.button
+                                  .copyWith(color: AppColors.textMedium))),
                       TextButton(
                           onPressed: () => Navigator.pop(context, true),
-                          child: const Text('Confirmer')),
+                          child: Text('Confirmer',
+                              style: AppTextStyles.button
+                                  .copyWith(color: AppColors.error))),
                     ],
                   ),
                 );
@@ -57,8 +68,7 @@ class CartScreen extends StatelessWidget {
                       size: 80, color: AppColors.textLight),
                   const SizedBox(height: 16),
                   Text('Votre panier est vide',
-                      style: AppTextStyles.heading2
-                          .copyWith(color: AppColors.textMedium)),
+                      style: AppTextStyles.heading2),
                   const SizedBox(height: 8),
                   Text('Ajoutez des produits pour continuer',
                       style: AppTextStyles.caption),
@@ -69,7 +79,7 @@ class CartScreen extends StatelessWidget {
                       backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(2)),
+                          borderRadius: BorderRadius.circular(8)),
                     ),
                     child: Text('Continuer les achats',
                         style: AppTextStyles.button),
@@ -86,147 +96,156 @@ class CartScreen extends StatelessWidget {
                     itemBuilder: (_, i) {
                       final item = cart.cartItems[i];
                       final product = cart.productForItem(item);
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 12),
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(2),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.05),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: BackdropFilter(
+                          filter:
+                              ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                          child: Container(
+                            margin: const EdgeInsets.only(bottom: 12),
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.05),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                  color: Colors.white.withOpacity(0.1)),
                             ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(2),
-                              child: product?.thumbnail.isNotEmpty == true
-                                  ? CachedNetworkImage(
-                                      imageUrl: product!.thumbnail,
-                                      width: 72,
-                                      height: 72,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Container(
-                                      width: 72,
-                                      height: 72,
-                                      color: AppColors.divider,
-                                      child: const Icon(Icons.image_outlined,
-                                          color: AppColors.textLight),
-                                    ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    product?.name ?? 'Produit',
-                                    style: AppTextStyles.bodyMedium,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    AppConstants.formatMoney(
-                                        product?.price ?? 0),
-                                    style: AppTextStyles.price,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Column(
+                            child: Row(
                               children: [
-                                Row(
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child:
+                                      product?.thumbnail.isNotEmpty == true
+                                          ? CachedNetworkImage(
+                                              imageUrl: product!.thumbnail,
+                                              width: 72,
+                                              height: 72,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : Container(
+                                              width: 72,
+                                              height: 72,
+                                              color: AppColors.surface,
+                                              child: const Icon(
+                                                  Icons.image_outlined,
+                                                  color: Color(0xFF3F3F46)),
+                                            ),
+                                ),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        product?.name ?? 'Produit',
+                                        style: AppTextStyles.bodyMedium,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text(
+                                        AppConstants.formatMoney(
+                                            product?.price ?? 0),
+                                        style: AppTextStyles.price,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Column(
                                   children: [
-                                    _qtyBtn(
-                                      icon: Icons.remove,
-                                      onPressed: () => cart.updateQty(
-                                          item.id, item.quantity - 1),
+                                    Row(
+                                      children: [
+                                        _qtyBtn(
+                                          icon: Icons.remove,
+                                          onPressed: () => cart.updateQty(
+                                              item.id, item.quantity - 1),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8),
+                                          child: Text('${item.quantity}',
+                                              style:
+                                                  AppTextStyles.bodyMedium),
+                                        ),
+                                        _qtyBtn(
+                                          icon: Icons.add,
+                                          onPressed: () => cart.updateQty(
+                                              item.id, item.quantity + 1),
+                                        ),
+                                      ],
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8),
-                                      child: Text('${item.quantity}',
-                                          style: AppTextStyles.bodyMedium),
-                                    ),
-                                    _qtyBtn(
-                                      icon: Icons.add,
-                                      onPressed: () => cart.updateQty(
-                                          item.id, item.quantity + 1),
+                                    TextButton(
+                                      onPressed: () =>
+                                          cart.removeItem(item.id),
+                                      child: Text('Supprimer',
+                                          style: AppTextStyles.caption
+                                              .copyWith(
+                                                  color: AppColors.error)),
                                     ),
                                   ],
                                 ),
-                                TextButton(
-                                  onPressed: () =>
-                                      cart.removeItem(item.id),
-                                  child: Text('Supprimer',
-                                      style: AppTextStyles.caption
-                                          .copyWith(color: AppColors.error)),
-                                ),
                               ],
                             ),
-                          ],
+                          ),
                         ),
                       );
                     },
                   ),
                 ),
-                // Summary
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.vertical(
-                        top: Radius.circular(2)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
-                        blurRadius: 16,
-                        offset: const Offset(0, -4),
+                // ── Summary Panel ─────────────────────────────────────────
+                ClipRect(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.06),
+                        border: Border(
+                            top: BorderSide(
+                                color: Colors.white.withOpacity(0.1))),
                       ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      _summaryRow('Sous-total',
-                          AppConstants.formatMoney(cart.subtotal)),
-                      const SizedBox(height: 8),
-                      _summaryRow('Livraison',
-                          AppConstants.formatMoney(cart.delivery)),
-                      const Divider(height: 24),
-                      _summaryRow(
-                        'Total',
-                        AppConstants.formatMoney(cart.total),
-                        bold: true,
-                      ),
-                      const SizedBox(height: 16),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const CODCheckoutScreen()),
+                      child: Column(
+                        children: [
+                          _summaryRow('Sous-total',
+                              AppConstants.formatMoney(cart.subtotal)),
+                          const SizedBox(height: 8),
+                          _summaryRow('Livraison',
+                              AppConstants.formatMoney(cart.delivery)),
+                          Divider(
+                              color: AppColors.divider, height: 24),
+                          _summaryRow(
+                            'Total',
+                            AppConstants.formatMoney(cart.total),
+                            bold: true,
                           ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            foregroundColor: Colors.white,
-                            padding:
-                                const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(2)),
-                            elevation: 0,
+                          const SizedBox(height: 16),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) =>
+                                        const CODCheckoutScreen()),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primary,
+                                foregroundColor: Colors.white,
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(8)),
+                                elevation: 0,
+                              ),
+                              child: Text('Passer la commande (COD)',
+                                  style: AppTextStyles.button),
+                            ),
                           ),
-                          child: Text('Passer la commande (COD)',
-                              style: AppTextStyles.button),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ],
@@ -234,17 +253,18 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _qtyBtn({required IconData icon, required VoidCallback onPressed}) {
+  Widget _qtyBtn(
+      {required IconData icon, required VoidCallback onPressed}) {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
         width: 28,
         height: 28,
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.divider),
-          borderRadius: BorderRadius.circular(2),
+          border: Border.all(color: Colors.white.withOpacity(0.15)),
+          borderRadius: BorderRadius.circular(6),
         ),
-        child: Icon(icon, size: 16, color: AppColors.textDark),
+        child: Icon(icon, size: 16, color: Colors.white),
       ),
     );
   }

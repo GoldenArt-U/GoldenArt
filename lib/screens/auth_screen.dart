@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:artisan_market/providers/auth_provider.dart';
@@ -49,112 +50,142 @@ class _AuthScreenState extends State<AuthScreen>
     }
   }
 
-  InputDecoration _inputDecor(String label, IconData icon) => InputDecoration(
-        labelText: label,
-        labelStyle: AppTextStyles.caption,
-        prefixIcon: Icon(icon, color: AppColors.primary, size: 20),
-        filled: true,
-        fillColor: AppColors.background,
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(2), borderSide: BorderSide.none),
-        enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(2),
-            borderSide: const BorderSide(color: Color(0xFFE5E7EB))),
-        focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(2),
-            borderSide: BorderSide(color: AppColors.primary, width: 2)),
-      );
-
   Widget _leftPanel() => Container(
         color: AppColors.dark,
-        padding: const EdgeInsets.all(40),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
+          fit: StackFit.expand,
           children: [
-            RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                    text: 'GOLDEN\n',
-                    style: AppTextStyles.heading1.copyWith(color: Colors.white, letterSpacing: 4)),
-                TextSpan(
-                    text: 'ART',
-                    style: AppTextStyles.heading1.copyWith(color: AppColors.primary, letterSpacing: 8)),
-              ]),
+            // Subtle burgundy gradient on left panel
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    AppColors.primary.withOpacity(0.15),
+                    Colors.transparent,
+                    AppColors.primary.withOpacity(0.05),
+                  ],
+                ),
+              ),
             ),
-            const SizedBox(height: 16),
-            Container(width: 40, height: 2, color: AppColors.primary),
-            const SizedBox(height: 20),
-            Text(
-              AppConstants.tagline.toUpperCase(),
-              style: AppTextStyles.caption.copyWith(
-                  color: const Color(0xFF9CA3AF), letterSpacing: 2),
-            ),
-            const Spacer(),
-            Text(
-              '"L\'artisanat tunisien est\nune fenêtre sur l\'histoire."',
-              style: AppTextStyles.body.copyWith(
-                  color: const Color(0xFF6B7280),
-                  fontStyle: FontStyle.italic,
-                  height: 1.7),
+            Padding(
+              padding: const EdgeInsets.all(40),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                          text: 'GOLDEN\n',
+                          style: AppTextStyles.heading1
+                              .copyWith(color: Colors.white, letterSpacing: 4)),
+                      TextSpan(
+                          text: 'ART',
+                          style: AppTextStyles.heading1.copyWith(
+                              color: AppColors.primary, letterSpacing: 8)),
+                    ]),
+                  ),
+                  const SizedBox(height: 16),
+                  Container(width: 40, height: 2, color: AppColors.primary),
+                  const SizedBox(height: 20),
+                  Text(
+                    AppConstants.tagline.toUpperCase(),
+                    style: AppTextStyles.caption
+                        .copyWith(color: AppColors.textLight, letterSpacing: 2),
+                  ),
+                  const Spacer(),
+                  Text(
+                    '"L\'artisanat tunisien est\nune fenêtre sur l\'histoire."',
+                    style: AppTextStyles.body.copyWith(
+                        color: AppColors.textMedium,
+                        fontStyle: FontStyle.italic,
+                        height: 1.7),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
       );
 
-  Widget _rightPanel(AuthProvider auth) => Container(
-        color: Colors.white,
+  Widget _formPanel(AuthProvider auth) => Container(
+        color: AppColors.background,
         padding: const EdgeInsets.all(32),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 32),
+              const SizedBox(height: 48),
               Text('Bienvenue', style: AppTextStyles.heading2),
               const SizedBox(height: 4),
               Text('Connectez-vous à votre compte GoldenArt.',
                   style: AppTextStyles.caption),
-              const SizedBox(height: 24),
+              const SizedBox(height: 28),
+
               // Tab bar
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.background,
-                  borderRadius: BorderRadius.circular(2),
-                  border: Border.all(color: AppColors.border),
-                ),
-                child: TabBar(
-                  controller: _tabController,
-                  indicator: BoxDecoration(
-                    color: AppColors.dark,
-                    borderRadius: BorderRadius.circular(2),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.05),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                          color: Colors.white.withOpacity(0.12)),
+                    ),
+                    child: TabBar(
+                      controller: _tabController,
+                      indicator: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      labelColor: Colors.white,
+                      unselectedLabelColor: AppColors.textMedium,
+                      labelStyle: AppTextStyles.bodyMedium,
+                      tabs: const [
+                        Tab(text: 'Connexion'),
+                        Tab(text: 'Inscription'),
+                      ],
+                    ),
                   ),
-                  labelColor: Colors.white,
-                  unselectedLabelColor: AppColors.textMedium,
-                  labelStyle: AppTextStyles.bodyMedium,
-                  tabs: const [
-                    Tab(text: 'Connexion'),
-                    Tab(text: 'Inscription'),
-                  ],
                 ),
               ),
               const SizedBox(height: 24),
-              if (_tabController.index == 1) ...([
+
+              if (_tabController.index == 1) ...[
                 TextField(
-                    controller: _nameCtrl,
-                    decoration: _inputDecor('Nom complet', Icons.person_outline)),
+                  controller: _nameCtrl,
+                  style: AppTextStyles.bodyMedium,
+                  decoration: InputDecoration(
+                    labelText: 'Nom complet',
+                    prefixIcon:
+                        Icon(Icons.person_outline, color: AppColors.primary),
+                  ),
+                ),
                 const SizedBox(height: 12),
-              ]),
+              ],
               TextField(
                 controller: _emailCtrl,
                 keyboardType: TextInputType.emailAddress,
-                decoration: _inputDecor('Email', Icons.email_outlined),
+                style: AppTextStyles.bodyMedium,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  prefixIcon:
+                      Icon(Icons.email_outlined, color: AppColors.primary),
+                ),
               ),
               const SizedBox(height: 12),
               TextField(
                 controller: _passCtrl,
                 obscureText: _obscure,
-                decoration: _inputDecor('Mot de passe', Icons.lock_outline)
-                    .copyWith(
+                style: AppTextStyles.bodyMedium,
+                decoration: InputDecoration(
+                  labelText: 'Mot de passe',
+                  prefixIcon:
+                      Icon(Icons.lock_outline, color: AppColors.primary),
                   suffixIcon: IconButton(
                     icon: Icon(
                         _obscure
@@ -166,18 +197,23 @@ class _AuthScreenState extends State<AuthScreen>
                 ),
               ),
               const SizedBox(height: 24),
-              if (auth.error != null) ...([
+
+              if (auth.error != null) ...[
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFEE2E2),
-                    borderRadius: BorderRadius.circular(2),
+                    color: AppColors.error.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                        color: AppColors.error.withOpacity(0.3)),
                   ),
                   child: Text(auth.error!,
-                      style: AppTextStyles.caption.copyWith(color: AppColors.error)),
+                      style: AppTextStyles.caption
+                          .copyWith(color: AppColors.error)),
                 ),
                 const SizedBox(height: 12),
-              ]),
+              ],
+
               ElevatedButton(
                 onPressed: auth.loading ? null : _submit,
                 style: ElevatedButton.styleFrom(
@@ -185,7 +221,7 @@ class _AuthScreenState extends State<AuthScreen>
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(2)),
+                      borderRadius: BorderRadius.circular(8)),
                   elevation: 0,
                 ),
                 child: auth.loading
@@ -201,60 +237,66 @@ class _AuthScreenState extends State<AuthScreen>
                         style: AppTextStyles.button),
               ),
               const SizedBox(height: 12),
+
+              // Google sign-in
               OutlinedButton.icon(
                 onPressed: () async {
                   await auth.signInWithGoogle();
                   if (mounted && auth.isLoggedIn) {
-                    Navigator.pushReplacement(
-                        context,
+                    Navigator.pushReplacement(context,
                         MaterialPageRoute(
                             builder: (_) => const HomeScreen()));
                   }
                 },
-                icon: const Icon(Icons.g_mobiledata, size: 28, color: Colors.black87),
+                icon: const Icon(Icons.g_mobiledata,
+                    size: 28, color: Colors.white70),
                 label: Text('Continuer avec Google',
-                    style: AppTextStyles.bodyMedium.copyWith(color: Colors.black87)),
+                    style: AppTextStyles.bodyMedium
+                        .copyWith(color: Colors.white70)),
                 style: OutlinedButton.styleFrom(
-                  side: BorderSide(color: AppColors.border),
+                  side: BorderSide(
+                      color: Colors.white.withOpacity(0.2)),
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(2)),
+                      borderRadius: BorderRadius.circular(8)),
                 ),
               ),
               const SizedBox(height: 12),
+
+              // Demo mode
               OutlinedButton.icon(
                 onPressed: () async {
                   await auth.signIn('demo@goldenart.tn', 'demo123');
                   if (mounted) {
-                    Navigator.pushReplacement(
-                        context,
+                    Navigator.pushReplacement(context,
                         MaterialPageRoute(
                             builder: (_) => const HomeScreen()));
                   }
                 },
                 icon: Icon(Icons.bolt_rounded, color: AppColors.primary),
                 label: Text('Tester en Mode Démo',
-                    style:
-                        AppTextStyles.bodyMedium.copyWith(color: AppColors.primary)),
+                    style: AppTextStyles.bodyMedium
+                        .copyWith(color: AppColors.primary)),
                 style: OutlinedButton.styleFrom(
                   side: BorderSide(color: AppColors.primary),
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(2)),
+                      borderRadius: BorderRadius.circular(8)),
                 ),
               ),
               const SizedBox(height: 16),
               Center(
                 child: TextButton(
                   onPressed: () => setState(() {
-                    _tabController.animateTo(_tabController.index == 0 ? 1 : 0);
+                    _tabController
+                        .animateTo(_tabController.index == 0 ? 1 : 0);
                   }),
                   child: Text(
                     _tabController.index == 0
                         ? "Pas de compte ? S'inscrire"
                         : 'Déjà un compte ? Se connecter',
-                    style:
-                        AppTextStyles.caption.copyWith(color: AppColors.primary),
+                    style: AppTextStyles.caption
+                        .copyWith(color: AppColors.primary),
                   ),
                 ),
               ),
@@ -270,16 +312,14 @@ class _AuthScreenState extends State<AuthScreen>
       body: LayoutBuilder(
         builder: (context, constraints) {
           if (constraints.maxWidth >= 700) {
-            // Two-panel layout
             return Row(
               children: [
                 Expanded(flex: 4, child: _leftPanel()),
-                Expanded(flex: 6, child: _rightPanel(auth)),
+                Expanded(flex: 6, child: _formPanel(auth)),
               ],
             );
           } else {
-            // Single panel (mobile)
-            return _rightPanel(auth);
+            return _formPanel(auth);
           }
         },
       ),
