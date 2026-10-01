@@ -9,6 +9,8 @@ import 'package:artisan_market/services/firestore_service.dart';
 import 'package:artisan_market/screens/cart_screen.dart';
 import 'package:artisan_market/screens/orders_screen.dart';
 import 'package:artisan_market/screens/product_detail_screen.dart';
+import 'package:artisan_market/screens/auth_screen.dart';
+import 'package:artisan_market/screens/buyer_profile_screen.dart';
 import 'package:artisan_market/screens/dashboard_screen.dart';
 import 'package:artisan_market/widgets/product_card.dart';
 import 'package:artisan_market/utils/constants.dart';
@@ -119,9 +121,21 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               IconButton(
                 icon: const Icon(Icons.person_outline, color: Colors.white),
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(
-                        builder: (_) => const DashboardScreen())),
+                onPressed: () {
+                  if (!auth.isLoggedIn) {
+                    Navigator.push(context,
+                        MaterialPageRoute(
+                            builder: (_) => const AuthScreen()));
+                  } else if (auth.isSeller) {
+                    Navigator.push(context,
+                        MaterialPageRoute(
+                            builder: (_) => const DashboardScreen()));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(
+                            builder: (_) => const BuyerProfileScreen()));
+                  }
+                },
               ),
               const SizedBox(width: 8),
             ],
